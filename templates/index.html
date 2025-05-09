@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beta Console</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@500&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Header -->
+  <header class="bg-white shadow-md px-6 py-3 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-600">Beta Console</h1>
+    <div class="flex items-center space-x-4">
+      <select class="border rounded px-2 py-1 text-sm">
+        {% for db in databases %}
+          <option>{{ db }}</option>
+        {% endfor %}
+      </select>
+      <select class="border rounded px-2 py-1 text-sm">
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="flex h-[calc(100vh-64px)]">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r p-4 flex flex-col justify-between">
+      <div>
+        <h2 class="text-lg font-semibold mb-2">Questions</h2>
+        <ul class="space-y-1 text-sm">
+          {% for question in questions %}
+            <li class="hover:bg-blue-100 p-2 rounded cursor-pointer">{{ loop.index }}. {{ question[3] }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded text-sm mt-4">View All Questions</button>
+      </div>
+    </aside>
+
+    <!-- Main Panel -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <h2 class="text-xl font-semibold mb-4">Write your SQL Query</h2>
+      <div class="bg-white border rounded p-4 shadow-sm mb-4">
+        <p class="text-sm mb-2 text-gray-500">Question: <span class="font-medium">Select all patients from the table</span></p>
+        <textarea id="sqlEditor" class="w-full h-40 p-3 text-sm font-mono bg-gray-100 border rounded focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="SELECT * FROM patients;"></textarea>
+      </div>
+      
+      <div class="flex space-x-4 mb-6">
+        <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded text-sm">Run Query</button>
+        <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded text-sm">Skip</button>
+        <button class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-2 rounded text-sm">Reset</button>
+      </div>
+
+      <div class="bg-white border rounded p-4 shadow-sm">
+        <h3 class="font-semibold mb-2">Query Output</h3>
+        <div class="bg-gray-50 p-2 rounded text-sm font-mono text-gray-700">
+          -- Output will appear here after running query
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Panel -->
+    <aside class="w-64 bg-white border-l p-4">
+      <h2 class="text-lg font-semibold mb-2">Schema</h2>
+      <pre class="bg-gray-100 text-sm p-2 rounded overflow-x-auto">
+Table: patients
+- id (INT)
+- name (TEXT)
+- age (INT)
+- gender (TEXT)
+      </pre>
+    </aside>
+  </div>
+</body>
+</html>
