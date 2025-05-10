@@ -72,16 +72,32 @@
     </main>
 
     <!-- Right Panel -->
-    <aside class="w-64 bg-white border-l p-4">
-      <h2 class="text-lg font-semibold mb-2">Schema</h2>
-      <pre class="bg-gray-100 text-sm p-2 rounded overflow-x-auto">
-Table: patients
-- id (INT)
-- name (TEXT)
-- age (INT)
-- gender (TEXT)
-      </pre>
-    </aside>
+  <!-- Right Panel -->
+<aside class="w-64 bg-white border-l p-4">
+  <h2 class="text-lg font-semibold mb-2">Schema</h2>
+
+  <!-- Loop through the schema for each database -->
+  {% for db_name, db_schema in schema.items() %}
+    <div class="mb-4">
+      <h3 class="text-lg font-semibold">{{ db_name }}</h3>
+
+      <!-- Loop through the tables in the database -->
+      <div class="space-y-2">
+        {% for table_name, columns in db_schema.items() %}
+          <div class="border rounded p-2">
+            <p class="font-medium">{{ table_name }}</p>
+            <ul class="list-disc pl-5">
+              {% for column in columns %}
+                <li>{{ column }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</aside>
+  
   </div>
 </body>
 </html>
